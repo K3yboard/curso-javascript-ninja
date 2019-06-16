@@ -22,13 +22,13 @@ Crie uma função que adicione um valor à variável criada acima, e retorne a s
     O valor da variável agora é VALOR.
 Onde VALOR é o novo valor da variável.
 */
-function addValor(val) {
-  newVar = val;
+function addValor() {
+  newVar = 10;
   return 'O valor da variável agora é ' + newVar + '.';
 }
 
 // Invoque a função criada acima.
-addValor(10)
+addValor()
 
 // Qual o retorno da função? (Use comentários de bloco).
 // "O valor da variável agora é 10."
@@ -71,11 +71,11 @@ Crie uma função com as seguintes características:
 */
 function func4(a, b, c) {
 
-  if ( a !== undefined && b !==undefined && c !== undefined) {
+  if ( a !== undefined && b === undefined && c === undefined) {
     return (a + b)/c;
-  } else if (a !== undefined && b !==undefined) {
+  } else if ( a !== undefined && b !== undefined && c === undefined) {
     return a + b;
-  } else if (a !== undefined) {
+  } else if ( a !== undefined && b !== undefined && c !== undefined) {
     return a;
   } else if (a === undefined && b === undefined && c === undefined) {
     return false;
