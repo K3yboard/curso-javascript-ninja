@@ -7,19 +7,21 @@ um único parâmetro como argumento. Essa função deve retornar `true` se o
 equivalente booleano para o valor passado no argumento for `true`, ou `false`
 para o contrário.
 */
-var isTruthy = function(a) {
-  return a ? true : false;
-}
+var isTruthy = function(param) {
+  // return a ? true : false;
+  return !!param;
+};
 
 // Invoque a função criada acima, passando todos os tipos de valores `falsy`.
-isTruthy();
+isTruthy(false);
+isTruthy(null);
 isTruthy(undefined);
+isTruthy('');
+isTruthy("");
 isTruthy(0);
 isTruthy(-0);
 isTruthy(NaN);
-isTruthy(null);
-isTruthy('');
-isTruthy("");
+isTruthy();
 
 /*
 Invoque a função criada acima passando como parâmetro 10 valores `truthy`.
@@ -28,12 +30,12 @@ isTruthy(1);
 isTruthy('teste');
 isTruthy([]);
 isTruthy({});
+isTruthy(function() {});
 isTruthy(true);
 isTruthy(!!true);
 isTruthy(10.5);
 isTruthy("teste 2");
-isTruthy(!NaN);
-isTruthy(654);
+isTruthy(654 + 9);
 
 /*
 Declare uma variável chamada `carro`, atribuindo à ela um objeto com as
@@ -54,7 +56,7 @@ var carro = {
   ano: 2019,
   cor: 'Preto',
   quantasPortas: 2,
-  assentosNumber: 5,
+  assentos: 5,
   quantidadePessoas: 0
 };
 
@@ -112,22 +114,21 @@ mostrar quantos assentos ainda podem ser ocupados, com a frase:
 - Se couber somente mais uma pessoa, mostrar a palavra "pessoa" no retorno
 citado acima, no lugar de "pessoas".
 */
-carro.adicionarPessoas = function(numPessoas) {
-  var assentosLivre = carro.assentosNumber - carro.quantidadePessoas;
-  var pessoas = assentosLivre === 1 ? 'pessoa': 'pessoas';
-  var temVaga = assentosLivre > 0 ? true : false;
 
-  if (temVaga) {
-    if (numPessoas > assentosLivre) {
-      return "Só cabem mais " + assentosLivre + " " + pessoas;
-    }
-     if (numPessoas <= assentosLivre) {
-      carro.quantidadePessoas += numPessoas;
-      return "Já temos " + carro.quantidadePessoas + " pessoas no carro!";
-    }
-  } else {
-    return "O carro já está lotado!";
+carro.adicionarPessoas = function( numeroPessoas ) {
+  var totalPessoas = carro.quantidadePessoas + numeroPessoas;
+  if( carro.quantidadePessoas === carro.assentos && totalPessoas >= carro.assentos ) {
+    return 'O carro já está lotado!';
   }
+
+  if (totalPessoas > carro.assentos ) {
+    var quantasPessoasCabem = carro.assentos - carro.quantidadePessoas;
+    var pluralOuSingular = quantasPessoasCabem === 1 ? ' pessoa' : ' pessoas';
+    return 'Só cabem mais ' + quantasPessoasCabem + pluralOuSingular + '!';
+  }
+
+  carro.quantasPessoas += numeroPessoas;
+  return 'Já temos ' + carro.quantidadePessoas + ' pessoas no carro!';
 };
 
 /*
@@ -165,7 +166,7 @@ carro.adicionarPessoas(4); // "Só cabem mais 3 pessoas"
 carro.adicionarPessoas(3); // "Já temos 5 pessoas no carro!"
 
 // Tire 4 pessoas do carro.
-carro.quantidadePessoas -= 4;
+carro.adicionarPessoas(-4); // "Já temos 1 pessoas no carro!";
 
 // Adicione 10 pessoas no carro.
 carro.adicionarPessoas(10); // "Só cabem mais 4 pessoas"
